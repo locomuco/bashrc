@@ -122,8 +122,11 @@ if ! shopt -oq posix; then
 fi
 
 # nordic env
-export ZEPHYR_SDK_INSTALL_DIR="/home/matthias/zephyr-sdk-0.14.2"
+export ZEPHYR_SDK_INSTALL_DIR="/home/matthias/workspace/zephyr-sdk-0.15.1"
 export NCS_PATH=$HOME/workspace/ncs
+# nordic zephyr tools
+export PATH=${HOME}/tools/gn:"$PATH"
+export PATH=~/.local/bin:"$PATH"
 
 # tado env
 export SMART_THERMOSTAT_PATH=$HOME/workspace/SmartThermostat
@@ -134,6 +137,8 @@ export IDF_PATH=$HOME/workspace/esp-idf
 export BR_REPO_PATH=$HOME/workspace/esp-thread-br
 export HOMEKIT_SDK_PATH=$HOME/workspace/esp-homekit-sdk
 
-# setup NCS environment
+# load NCS environment
 source ${NCS_PATH}/zephyr/zephyr-env.sh
 
+# load ESP environment
+alias get_idf='. $HOME/workspace/esp-idf/export.sh'
