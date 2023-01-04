@@ -56,10 +56,15 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Add git branch if its present to PS1
+
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+ PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(parse_git_branch)\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -115,3 +120,20 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# nordic env
+export ZEPHYR_SDK_INSTALL_DIR="/home/matthias/zephyr-sdk-0.14.2"
+export NCS_PATH=$HOME/workspace/ncs
+
+# tado env
+export SMART_THERMOSTAT_PATH=$HOME/workspace/SmartThermostat
+export TOOLCHAIN_PATH=$HOME/workspace/embedded-toolchain
+
+# espressif env
+export IDF_PATH=$HOME/workspace/esp-idf
+export BR_REPO_PATH=$HOME/workspace/esp-thread-br
+export HOMEKIT_SDK_PATH=$HOME/workspace/esp-homekit-sdk
+
+# setup NCS environment
+source ${NCS_PATH}/zephyr/zephyr-env.sh
+
